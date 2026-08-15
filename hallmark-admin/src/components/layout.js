@@ -1,6 +1,8 @@
 import logo from "../../assets/hallmark-logo.webp";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
-export function renderLayout() {
+export function renderLayout(user) {
 
     document.querySelector("#app").innerHTML = `
 
@@ -49,6 +51,18 @@ export function renderLayout() {
             ⚙ Settings
         </button>
 
+        <div class="mt-auto pt-4 border-top mt-3">
+
+            <div class="text-muted small mb-2 text-truncate">
+                ${user?.email || ""}
+            </div>
+
+            <button id="signOutBtn" class="btn btn-outline-secondary btn-sm w-100">
+                Sign Out
+            </button>
+
+        </div>
+
     </div>
 
     <div
@@ -67,5 +81,7 @@ export function renderLayout() {
 <div id="globalModal"></div>
 
 `;
+
+    document.getElementById("signOutBtn").onclick = () => signOut(auth);
 
 }
